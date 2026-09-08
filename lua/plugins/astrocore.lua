@@ -86,6 +86,9 @@ return {
         -- setting a mapping to false will disable it
         -- ["<C-S>"] = false,
       },
+      t = {
+        ["<Esc><Esc>"] = { "<C-\\><C-n>", desc = "Exit terminal mode" },
+      },
     },
   },
 }
