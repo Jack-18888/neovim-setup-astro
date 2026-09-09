@@ -61,8 +61,35 @@ return {
     mappings = {
       -- first key is the mode
       n = {
-        ["<Leader>th"] = { "<Cmd>ToggleTerm direction=horizontal<CR>", desc = "ToggleTerm horizontal split" },
-        ["<Leader>tv"] = { "<Cmd>ToggleTerm direction=vertical<CR>", desc = "ToggleTerm vertical split" },
+        ["<Leader>th"] = {
+          function() vim.cmd(vim.v.count1 .. "ToggleTerm direction=horizontal") end,
+          desc = "ToggleTerm horizontal split",
+        },
+        ["<Leader>tv"] = {
+          function() vim.cmd(vim.v.count1 .. "ToggleTerm direction=vertical") end,
+          desc = "ToggleTerm vertical split",
+        },
+        ["<Leader>ta"] = { "<Cmd>ToggleTermToggleAll<CR>", desc = "Toggle all open terminals" },
+        ["<Leader>ts"] = { "<Cmd>TermSelect<CR>", desc = "Select terminal from list" },
+        ["<Leader>tr"] = { "<Cmd>ToggleTermSetName<CR>", desc = "Rename terminal" },
+
+        -- Create new terminal session
+        ["<Leader>tc"] = {
+          function()
+            local terms = require("toggleterm.terminal").get_all()
+            local dir = "vertical"
+            for _, t in ipairs(terms) do
+              if t:is_open() then
+                dir = t.direction
+                break
+              end
+            end
+            require("toggleterm.terminal").Terminal:new({ direction = dir }):open()
+          end,
+          desc = "Create new terminal",
+        },
+        ["<F7>"] = { "<Cmd>ToggleTerm<CR>", desc = "Toggle terminal" },
+
         -- second key is the lefthand side of the map
 
         -- navigate buffer tabs
@@ -88,6 +115,11 @@ return {
       },
       t = {
         ["<Esc><Esc>"] = { "<C-\\><C-n>", desc = "Exit terminal mode" },
+        ["<F7>"] = { "<Cmd>ToggleTerm<CR>", desc = "Toggle terminal" },
+        ["<C-h>"] = { "<Cmd>wincmd h<CR>", desc = "Move to left window" },
+        ["<C-j>"] = { "<Cmd>wincmd j<CR>", desc = "Move to below window" },
+        ["<C-k>"] = { "<Cmd>wincmd k<CR>", desc = "Move to above window" },
+        ["<C-l>"] = { "<Cmd>wincmd l<CR>", desc = "Move to right window" },
       },
     },
   },
