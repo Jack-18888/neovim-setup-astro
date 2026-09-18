@@ -19,12 +19,24 @@ return {
       ui.open_split = function(size, term)
         local has_open, windows = ui.find_open_windows()
         if has_open and #windows > 0 then
-          local split_win = windows[#windows].window
+          local cur_win = vim.api.nvim_get_current_win()
+          local split_win = nil
+          for _, w in ipairs(windows) do
+            if w.window == cur_win then
+              split_win = cur_win
+              break
+            end
+          end
+          split_win = split_win or windows[#windows].window
           vim.api.nvim_set_current_win(split_win)
           for _, t in ipairs(require("toggleterm.terminal").get_all(true)) do
             if t.window == split_win then t.window = nil end
           end
-          ui.resize_split(term, size)
+          if size then
+            ui.resize_split(term, size)
+          elseif ui.save_window_size then
+            ui.save_window_size(term.direction, split_win)
+          end
           local valid_win = term.window and vim.api.nvim_win_is_valid(term.window)
           local window = valid_win and term.window or split_win
           local valid_buf = term.bufnr and vim.api.nvim_buf_is_valid(term.bufnr)
@@ -55,10 +67,17 @@ return {
 
       local has_open, windows = ui.find_open_windows()
       local current_id = nil
-      if has_open and #windows > 0 then
-        local cur_buf = vim.api.nvim_win_get_buf(windows[1].window)
+      local cur_buf = vim.api.nvim_get_current_buf()
+      for _, t in ipairs(all_terms) do
+        if t.bufnr == cur_buf then
+          current_id = t.id
+          break
+        end
+      end
+      if not current_id and has_open and #windows > 0 then
+        local win_buf = vim.api.nvim_win_get_buf(windows[#windows].window)
         for _, t in ipairs(all_terms) do
-          if t.bufnr == cur_buf then
+          if t.bufnr == win_buf then
             current_id = t.id
             break
           end
