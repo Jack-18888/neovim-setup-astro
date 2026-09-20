@@ -97,7 +97,7 @@ return {
     end
 
     return vim.tbl_deep_extend("force", opts, {
-      shell = "pwsh",
+      shell = vim.fn.has "win32" == 1 and (vim.fn.executable "pwsh" == 1 and "pwsh" or "powershell") or vim.o.shell,
       direction = "horizontal",
       size = function(term)
         if term.direction == "horizontal" then
