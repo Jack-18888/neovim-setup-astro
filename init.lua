@@ -25,3 +25,7 @@ end
 
 require "lazy_setup"
 require "polish"
+
+vim.opt.background = "dark"
+vim.opt.guifont = { "JetBrainsMono Nerd Font", ":h11" }
+vim.g.neovide_scale_factor = 0.75
