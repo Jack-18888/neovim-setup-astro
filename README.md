@@ -22,6 +22,7 @@ This repository contains a personal, fast, and feature-rich Neovim configuration
 - **Language Server & Tool Management**:
   - Automated package management via [`mason.nvim`](https://github.com/williamboman/mason.nvim) and `mason-tool-installer`.
   - Includes `lua-language-server`, `stylua`, `debugpy`, and `tree-sitter-cli`.
+- **Rust Support**: The [AstroCommunity Rust pack](https://github.com/AstroNvim/astrocommunity/tree/main/lua/astrocommunity/pack/rust) provides Rust and TOML syntax highlighting, Rust Analyzer integration through `rustaceanvim`, Clippy diagnostics, Cargo dependency completion through `crates.nvim`, and CodeLLDB debugging.
 
 ---
 
@@ -49,6 +50,15 @@ To get the full experience (syntax highlighting, live grep, code navigation, for
 | **[Node.js](https://nodejs.org/) & `npm`** (LTS) | Required by Mason for many LSP servers and formatters | Recommended |
 | **[Python 3](https://www.python.org/) & `pip`** | Debuggers (`debugpy`) and Python LSP support | Recommended |
 | **[lazygit](https://github.com/jesseduffield/lazygit)** | Terminal UI for Git operations | Recommended |
+| **[Rust via rustup](https://rustup.rs/)** | Rust compiler, Cargo, Rust Analyzer, rustfmt, and Clippy | Required for Rust |
+
+For Rust development, install a Rust toolchain through rustup, then add the required components:
+
+```shell
+rustup component add rust-analyzer rustfmt clippy
+```
+
+The Rust pack uses Rust Analyzer from your toolchain rather than installing it through Mason. The configuration adds `$CARGO_HOME/bin` (or `~/.cargo/bin` by default) to Neovim's `PATH` when that directory exists, including when launched from a GUI. On the next Neovim launch, Lazy installs the Rust plugins, Mason installs CodeLLDB and the TOML language server, and Tree-sitter installs the Rust and TOML parsers. Open a Rust file inside a Cargo project to start the language server; use `:RustLsp runnables` to run targets and `:RustLsp debuggables` to debug them.
 
 ---
 
