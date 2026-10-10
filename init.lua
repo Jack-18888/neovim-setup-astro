@@ -25,3 +25,13 @@ end
 
 require "lazy_setup"
 require "polish"
+
+-- Enable line wrapping
+vim.opt.wrap = true
+
+-- Wrap lines at a character in 'breakat' (like a space) rather than mid-word
+vim.opt.linebreak = true
+
+-- Do not insert hard line breaks while typing
+vim.opt.textwidth = 0
+vim.opt.wrapmargin = 0
