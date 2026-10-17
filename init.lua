@@ -35,3 +35,6 @@ vim.opt.linebreak = true
 -- Do not insert hard line breaks while typing
 vim.opt.textwidth = 0
 vim.opt.wrapmargin = 0
+vim.opt.background = "dark"
+vim.opt.guifont = { "JetBrainsMono Nerd Font", ":h11" }
+vim.g.neovide_scale_factor = 0.75
