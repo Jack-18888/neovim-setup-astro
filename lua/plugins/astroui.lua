@@ -8,8 +8,8 @@ return {
   "AstroNvim/astroui",
   ---@type AstroUIOpts
   opts = {
-    -- change colorscheme
-    colorscheme = "catppuccin",
+    -- Restore the selected Catppuccin flavour (frappe by default).
+    colorscheme = "catppuccin-" .. require("catppuccin_flavour").get(),
     -- AstroUI allows you to easily modify highlight groups easily for any and all colorschemes
     highlights = {
       init = { -- this table overrides highlights in all themes

@@ -8,6 +8,19 @@ return {
   "AstroNvim/astrocore",
   ---@type AstroCoreOpts
   opts = {
+    commands = {
+      CatppuccinFlavour = {
+        function(args) require("catppuccin_flavour").select(args.args) end,
+        nargs = "?",
+        desc = "Choose and save a Catppuccin flavour",
+        complete = function(prefix)
+          return vim.tbl_filter(
+            function(flavour) return vim.startswith(flavour, prefix) end,
+            require("catppuccin_flavour").flavours
+          )
+        end,
+      },
+    },
     -- Configure core features of AstroNvim
     features = {
       large_buf = { size = 1024 * 256, lines = 10000 }, -- set global limits for large files for disabling features like treesitter
@@ -62,6 +75,7 @@ return {
     mappings = {
       -- first key is the mode
       n = {
+        ["<Leader>uC"] = { "<Cmd>CatppuccinFlavour<CR>", desc = "Choose Catppuccin flavour" },
         ["<Leader>th"] = {
           function() vim.cmd(vim.v.count1 .. "ToggleTerm direction=horizontal") end,
           desc = "ToggleTerm horizontal split",

@@ -171,6 +171,14 @@ On initial launch:
 
 In addition to standard AstroNvim mappings, this setup includes custom configurations:
 
+### Catppuccin Flavours
+
+Press `<Leader>uC` (Space, u, Shift+C) or run `:CatppuccinFlavour` to choose
+`latte`, `frappe`, `macchiato`, or `mocha`. You can also select one directly,
+for example `:CatppuccinFlavour latte` (Tab completion is available).
+Changes apply immediately and are saved for future Neovim sessions. The default
+is `frappe` until you select a flavour.
+
 ### Terminal (`ToggleTerm`)
 
 | Keybinding | Mode | Description |
